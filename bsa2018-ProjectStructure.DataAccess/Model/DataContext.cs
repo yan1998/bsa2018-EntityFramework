@@ -91,7 +91,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 LoadCapacity = 20000,
                 Places = 235
             };
-            this.AircraftTypes = new List<AircraftType> { aircraftType1, aircraftType2, aircraftType3 };
+            this.AircraftTypes.AddRange(aircraftType1, aircraftType2, aircraftType3);
             #endregion
 
             #region Aircrafts
@@ -102,10 +102,8 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 Name = "Airbus A330",
                 ReleaseDate = new DateTime(2010, 1, 17),
                 LifeSpan = new TimeSpan(200, 0, 0, 0),
-                AircraftType = aircraftType1,
                 IdAircraftType = aircraftType1.Id
             };
-            aircraftType1.Aircraft = aircraft1;
 
             Aircraft aircraft2 = new Aircraft
             {
@@ -113,10 +111,8 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 Name = "Boeing-737",
                 ReleaseDate = new DateTime(2009, 6, 7),
                 LifeSpan = new TimeSpan(157, 0, 0, 0),
-                AircraftType = aircraftType2,
                 IdAircraftType = aircraftType2.Id
             };
-            aircraftType2.Aircraft = aircraft2;
 
             Aircraft aircraft3 = new Aircraft
             {
@@ -124,11 +120,9 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 Name = "Boeing-777",
                 ReleaseDate = new DateTime(2009, 6, 7),
                 LifeSpan = new TimeSpan(157, 0, 0, 0),
-                AircraftType = aircraftType2,
                 IdAircraftType = aircraftType2.Id
             };
-            aircraftType3.Aircraft = aircraft3;
-            this.Aicrafts = new List<Aircraft> { aircraft1, aircraft2, aircraft3 };
+            this.Aicrafts.AddRange( aircraft1, aircraft2, aircraft3);
             #endregion
 
             #region Pilots
@@ -149,7 +143,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 Birthday = new DateTime(1973, 1, 15),
                 Experience = 6
             };
-            this.Pilots = new List<Pilot> { pilot1, pilot2 };
+            this.Pilots.AddRange(pilot1, pilot2);
             #endregion
 
             #region Stewardess
@@ -175,7 +169,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 Surname = "Mamedova",
                 Birthday = new DateTime(1982, 2, 17)
             };
-            this.Stewardess = new List<Stewardess> { stewardess1, stewardess2, stewardess3 };
+            this.Stewardess.AddRange(stewardess1, stewardess2, stewardess3);
             #endregion
 
             #region Crews
@@ -185,23 +179,32 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 Id = 1,
                 IdPilot = pilot1.Id,
                 Pilot = pilot1,
-                idStewardess = new List<int> { stewardess1.Id, stewardess2.Id },
+                StewardessCrews = new List<StewardessCrew> {
+                    new StewardessCrew{ IdCrew=1, IdStewardess= stewardess1.Id},
+                    new StewardessCrew{ IdCrew=1 ,IdStewardess=stewardess2.Id}
+                }
             };
             Crew crew2 = new Crew
             {
                 Id = 2,
                 IdPilot = pilot2.Id,
                 Pilot = pilot2,
-                idStewardess = new List<int> { stewardess1.Id, stewardess3.Id }
+                StewardessCrews = new List<StewardessCrew> {
+                    new StewardessCrew{ IdCrew=2, IdStewardess= stewardess1.Id},
+                    new StewardessCrew{ IdCrew=2 ,IdStewardess=stewardess3.Id}
+                }
             };
             Crew crew3 = new Crew
             {
                 Id = 3,
                 IdPilot = pilot2.Id,
                 Pilot = pilot2,
-                idStewardess = new List<int> { stewardess2.Id, stewardess3.Id }
+                StewardessCrews = new List<StewardessCrew> {
+                    new StewardessCrew{ IdCrew=3, IdStewardess= stewardess2.Id},
+                    new StewardessCrew{ IdCrew=3, IdStewardess=stewardess3.Id}
+                }
             };
-            this.Crews = new List<Crew> { crew1, crew2, crew3 };
+            this.Crews.AddRange(crew1, crew2, crew3 );
             #endregion
 
             #region Flights
@@ -230,7 +233,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
                 Destination = "Odessa, Ukraine",
                 DepartureTime = new DateTime(2018, 7, 15, 14, 0, 0)
             };
-            this.Flights = new List<Flight> { flight1, flight2, flight3 };
+            this.Flights.AddRange(flight1, flight2, flight3 );
             #endregion
 
             #region Tickets
@@ -238,88 +241,67 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
             {
                 Id = 1,
                 Cost = 1000,
-                Flight = flight1,
                 IdFlight = flight1.Id
             };
             Ticket ticket2 = new Ticket
             {
                 Id = 2,
                 Cost = 1300,
-                Flight = flight1,
                 IdFlight = flight1.Id
             };
             Ticket ticket3 = new Ticket
             {
                 Id = 3,
                 Cost = 800,
-                Flight = flight2,
                 IdFlight = flight2.Id
             };
             Ticket ticket4 = new Ticket
             {
                 Id = 4,
                 Cost = 850,
-                Flight = flight2,
                 IdFlight = flight2.Id
             };
             Ticket ticket5 = new Ticket
             {
                 Id = 5,
                 Cost = 1000,
-                Flight = flight3,
                 IdFlight = flight3.Id
             };
             Ticket ticket6 = new Ticket
             {
                 Id = 6,
                 Cost = 1100,
-                Flight = flight3,
                 IdFlight = flight3.Id
             };
-            this.Tickets = new List<Ticket> { ticket1, ticket2, ticket3, ticket4, ticket5, ticket6 };
-            flight1.Tickets = new List<Ticket> { ticket1, ticket2 };
-            flight2.Tickets = new List<Ticket> { ticket3, ticket4 };
-            flight3.Tickets = new List<Ticket> { ticket5, ticket6 };
+            this.Tickets.AddRange(ticket1, ticket2, ticket3, ticket4, ticket5, ticket6);
             #endregion
 
             #region Depatures
             Departure depature1 = new Departure
             {
                 Id = 1,
-                Aircraft = aircraft1,
                 IdAircraft = aircraft1.Id,
-                Crew = crew1,
                 IdCrew = crew1.Id,
                 DepartureTime = new DateTime(2018, 7, 13, 11, 0, 0),
-                Flight = flight1,
                 IdFlight = flight1.Id
             };
             Departure depature2 = new Departure
             {
                 Id = 2,
-                Aircraft = aircraft2,
                 IdAircraft = aircraft2.Id,
-                Crew = crew2,
                 IdCrew = crew2.Id,
                 DepartureTime = new DateTime(2018, 7, 13, 23, 20, 0),
-                Flight = flight2,
                 IdFlight = flight2.Id
             };
             Departure depature3 = new Departure
             {
                 Id = 3,
-                Aircraft = aircraft3,
                 IdAircraft = aircraft3.Id,
-                Crew = crew3,
                 IdCrew = crew3.Id,
                 DepartureTime = new DateTime(2018, 7, 15, 14, 0, 0),
-                Flight = flight3,
                 IdFlight = flight3.Id
             };
-            flight1.Departures = new List<Departure> { depature1 };
-            flight2.Departures = new List<Departure> { depature2 };
-            flight3.Departures = new List<Departure> { depature3 };
-            this.Departures = new List<Departure> { depature1, depature2, depature3 };
+            this.Departures.AddRange(depature1, depature2, depature3);
             #endregion
 
             SaveChanges();

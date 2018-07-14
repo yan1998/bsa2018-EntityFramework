@@ -6,7 +6,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
 {
     public class StewardessCrew
     {
-        public int IdStewardess { get; set }
+        public int IdStewardess { get; set; }
         public Stewardess Stewardess { get; set; }
 
         public int IdCrew { get; set; }

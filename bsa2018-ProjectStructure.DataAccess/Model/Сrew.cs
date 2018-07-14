@@ -7,6 +7,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
         public int IdPilot { get; set; }
         public Pilot Pilot { get; set; }
 
-        public List<int> idStewardess { get; set; }
+        public ICollection<StewardessCrew> StewardessCrews { get; set; }
+        public ICollection<Departure> Departures { get; set; }
     }
 }

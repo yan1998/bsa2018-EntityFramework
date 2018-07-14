@@ -10,7 +10,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
         public string Destination { get; set; }
         public DateTime ArrivalTime { get; set; }
 
-        public List<Ticket> Tickets { get; set; }
-        public List<Departure> Departures { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
+        public ICollection<Departure> Departures { get; set; }
     }
 }

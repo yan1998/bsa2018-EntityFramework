@@ -1,22 +1,72 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace bsa2018_ProjectStructure.DataAccess.Model
 {
-    public class DataContext
+    public class DataContext : DbContext
     {
-        public List<Aircraft> Aicrafts { get; set; }
-        public List<AircraftType> AircraftTypes { get; set; }
-        public List<Departure> Departures { get; set; }
-        public List<Flight> Flights { get; set; }
-        public List<Pilot> Pilots { get; set; }
-        public List<Stewardess> Stewardess { get; set; }
-        public List<Ticket> Tickets { get; set; }
-        public List<Crew> Crews { get; set; }
-
-        public DataContext()
+        public DataContext() : base()
         {
             LoadData();
+        }
+
+        public DbSet<Aircraft> Aicrafts { get; set; }
+        public DbSet<AircraftType> AircraftTypes { get; set; }
+        public DbSet<Departure> Departures { get; set; }
+        public DbSet<Flight> Flights { get; set; }
+        public DbSet<Pilot> Pilots { get; set; }
+        public DbSet<Stewardess> Stewardess { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Crew> Crews { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS; Initial catalog=bsa2018_EF");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ticket>()
+                .HasOne<Flight>(t => t.Flight)
+                .WithMany(f => f.Tickets)
+                .HasForeignKey(t => t.IdFlight);
+
+            modelBuilder.Entity<Departure>()
+                .HasOne<Flight>(d => d.Flight)
+                .WithMany(f => f.Departures)
+                .HasForeignKey(d => d.IdFlight);
+
+            modelBuilder.Entity<Departure>()
+                .HasOne<Crew>(d => d.Crew)
+                .WithMany(c => c.Departures)
+                .HasForeignKey(d => d.IdCrew);
+
+            modelBuilder.Entity<Departure>()
+                .HasOne<Aircraft>(d => d.Aircraft)
+                .WithMany(a => a.Departures)
+                .HasForeignKey(d => d.IdAircraft);
+
+            modelBuilder.Entity<AircraftType>()
+                .HasOne<Aircraft>(at => at.Aircraft)
+                .WithOne(a => a.AircraftType)
+                .HasForeignKey<Aircraft>(at => at.IdAircraftType);
+
+            modelBuilder.Entity<Crew>()
+                .HasOne<Pilot>(c => c.Pilot)
+                .WithMany(p => p.Crews)
+                .HasForeignKey(c=>c.IdPilot);
+
+            modelBuilder.Entity<StewardessCrew>().HasKey(sc => new { sc.IdStewardess, sc.IdCrew });
+
+            modelBuilder.Entity<StewardessCrew>()
+                .HasOne<Stewardess>(sc => sc.Stewardess)
+                .WithMany(s => s.StewardessCrews)
+                .HasForeignKey(sc => sc.IdStewardess);
+            modelBuilder.Entity<StewardessCrew>()
+                .HasOne<Crew>(sc => sc.Crew)
+                .WithMany(c => c.StewardessCrews)
+                .HasForeignKey(sc => sc.IdCrew);
         }
 
         private void LoadData()
@@ -158,11 +208,11 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
 
             Flight flight1 = new Flight
             {
-                Id=1,
-                ArrivalTime=new DateTime(2018,7,14,20,0,0),
-                DeparturePlace="Odessa, Ukraine",
-                Destination="Istambul, Turkey",
-                DepartureTime=new DateTime(2018, 7, 13, 10, 30, 0) 
+                Id = 1,
+                ArrivalTime = new DateTime(2018, 7, 14, 20, 0, 0),
+                DeparturePlace = "Odessa, Ukraine",
+                Destination = "Istambul, Turkey",
+                DepartureTime = new DateTime(2018, 7, 13, 10, 30, 0)
             };
             Flight flight2 = new Flight
             {
@@ -184,11 +234,12 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
             #endregion
 
             #region Tickets
-            Ticket ticket1 = new Ticket {
-                Id=1,
-                Cost=1000,
-                Flight=flight1,
-                IdFlight=flight1.Id
+            Ticket ticket1 = new Ticket
+            {
+                Id = 1,
+                Cost = 1000,
+                Flight = flight1,
+                IdFlight = flight1.Id
             };
             Ticket ticket2 = new Ticket
             {
@@ -232,15 +283,16 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
             #endregion
 
             #region Depatures
-            Departure depature1 = new Departure {
-                Id=1,
-                Aircraft=aircraft1,
-                IdAircraft=aircraft1.Id,
-                Crew=crew1,
-                IdCrew=crew1.Id,
-                DepartureTime=new DateTime(2018, 7, 13, 11, 0, 0),
-                Flight=flight1,
-                IdFlight=flight1.Id
+            Departure depature1 = new Departure
+            {
+                Id = 1,
+                Aircraft = aircraft1,
+                IdAircraft = aircraft1.Id,
+                Crew = crew1,
+                IdCrew = crew1.Id,
+                DepartureTime = new DateTime(2018, 7, 13, 11, 0, 0),
+                Flight = flight1,
+                IdFlight = flight1.Id
             };
             Departure depature2 = new Departure
             {
@@ -267,8 +319,10 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
             flight1.Departures = new List<Departure> { depature1 };
             flight2.Departures = new List<Departure> { depature2 };
             flight3.Departures = new List<Departure> { depature3 };
-            this.Departures = new List<Departure> { depature1,depature2,depature3};
+            this.Departures = new List<Departure> { depature1, depature2, depature3 };
             #endregion
+
+            SaveChanges();
         }
     }
 }

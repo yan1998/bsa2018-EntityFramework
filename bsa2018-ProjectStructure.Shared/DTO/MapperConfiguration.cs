@@ -19,7 +19,9 @@ namespace bsa2018_ProjectStructure.Shared.DTO
 
                 cfg.CreateMap<Crew, CrewDTO>();
                 cfg.CreateMap<CrewDTO, Crew>()
-                    .ForMember(c => c.Pilot, opt => opt.Ignore());
+                    .ForMember(c => c.Pilot, opt => opt.Ignore())
+                    .ForMember(c => c.Departures, opt => opt.Ignore())
+                    .ForMember(c => c.StewardessCrews, opt => opt.Ignore());
 
                 cfg.CreateMap<Departure, DepartureDTO>()
                     .ForMember(d=>d.FlightNumber,opt=>opt.MapFrom(d=>d.IdFlight));
@@ -37,10 +39,12 @@ namespace bsa2018_ProjectStructure.Shared.DTO
                     .ForMember(f => f.Tickets, opt => opt.Ignore());
 
                 cfg.CreateMap<Pilot, PilotDTO>();
-                cfg.CreateMap<PilotDTO, Pilot>();
+                cfg.CreateMap<PilotDTO, Pilot>()
+                    .ForMember(p => p.Crews, opt => opt.Ignore());
 
                 cfg.CreateMap<Stewardess, StewardessDTO>();
-                cfg.CreateMap<StewardessDTO, Stewardess>();
+                cfg.CreateMap<StewardessDTO, Stewardess>()
+                        .ForMember(s => s.StewardessCrews, opt => opt.Ignore());
 
                 cfg.CreateMap<Ticket, TicketDTO>()
                     .ForMember(t=>t.FlightNumber, opt=>opt.MapFrom(t=>t.IdFlight));

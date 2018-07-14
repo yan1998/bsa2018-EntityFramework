@@ -104,12 +104,12 @@ namespace bsa2018_ProjectStructure.DataAccess.Repository
 
         public void SaveChages()
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
 
-        public Task SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -12,6 +12,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Model
         public int IdAircraftType { get; set; }
         public AircraftType AircraftType { get; set; }
 
-        public List<Departure> Departures { get; set; }
+        public ICollection<Departure> Departures { get; set; }
     }
 }

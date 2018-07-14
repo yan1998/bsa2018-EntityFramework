@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace bsa2018_ProjectStructure.DataAccess.Model
 {
-    public class Flight:Entity
+    public class Flight : Entity
     {
+        [Required]
         public string DeparturePlace { get; set; }
         public DateTime DepartureTime{ get; set; }
+        [Required]
         public string Destination { get; set; }
         public DateTime ArrivalTime { get; set; }
 

@@ -15,7 +15,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 
         public Pilot Create(Pilot entity)
         {
-            entity.Id = context.Pilots.Last().Id + 1;
             context.Pilots.Add(entity);
             return entity;
         }
@@ -25,12 +24,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             Pilot pilot = GetById(id);
             if (pilot == null)
                 throw new System.Exception("Incorrect id");
-            var crews=context.Crews.Where(c => c.Pilot.Id == pilot.Id);
-            foreach (var crew in crews)
-            {
-                crew.Pilot = null;
-                crew.IdPilot = 0;
-            }
             context.Pilots.Remove(pilot);
         }
 

@@ -15,7 +15,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 
         public Crew Create(Crew entity)
         {
-            entity.Id = context.Crews.Last().Id + 1;
             context.Crews.Add(entity);
             return entity;
         }
@@ -45,7 +44,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
                 throw new System.Exception("Incorrect id");
             crew.IdPilot = entity.IdPilot;
             crew.Pilot = context.Pilots.FirstOrDefault(p => p.Id == entity.IdPilot);
-            crew.idStewardess = entity.idStewardess;
+            crew.StewardessCrews = entity.StewardessCrews;
             return crew;
         }
     }

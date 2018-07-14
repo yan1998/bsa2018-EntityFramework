@@ -15,9 +15,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 
         public Aircraft Create(Aircraft entity)
         {
-            entity.Id = context.Aicrafts.Last().Id + 1;
-            entity.Departures = new List<Departure>();
-            context.Aicrafts.Add(entity);
+            context.Aicrafts.Add(entity); 
             return entity;
         }
 
@@ -26,12 +24,12 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             Aircraft aircraft = GetById(id);
             if (aircraft == null)
                 throw new System.Exception("Incorrect id");
-            foreach (var departure in aircraft.Departures)
-            {
-                departure.Flight.Departures.Remove(departure);
-                context.Departures.Remove(departure);
-            }
-            context.AircraftTypes.Remove(aircraft.AircraftType);
+            //foreach (var departure in aircraft.Departures)
+            //{
+            //    departure.Flight.Departures.Remove(departure);
+            //    context.Departures.Remove(departure);
+            //}
+            //context.AircraftTypes.Remove(aircraft.AircraftType);
             context.Aicrafts.Remove(aircraft);
         }
 

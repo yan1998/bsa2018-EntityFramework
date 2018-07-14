@@ -15,7 +15,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 
         public Stewardess Create(Stewardess entity)
         {
-            entity.Id = context.Stewardess.Last().Id + 1;
             context.Stewardess.Add(entity);
             return entity;
         }
@@ -25,9 +24,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             Stewardess stewardess = GetById(id);
             if (stewardess == null)
                 throw new System.Exception("Incorrect id");
-            var crews=context.Crews.Where(c => c.idStewardess.Contains(stewardess.Id));
-            foreach (var crew in crews)
-                crew.idStewardess.Remove(stewardess.Id);
             context.Stewardess.Remove(stewardess);
         }
 

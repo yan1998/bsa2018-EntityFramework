@@ -15,10 +15,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 
         public Ticket Create(Ticket entity)
         {
-            entity.Id = context.Tickets.Last().Id + 1;
-            Flight flight = context.Flights.FirstOrDefault(f => f.Id == entity.IdFlight);
-            flight.Tickets.Add(entity);
-            entity.Flight = flight;
             context.Tickets.Add(entity);
             return entity;
         }
@@ -28,7 +24,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             Ticket ticket = GetById(id);
             if (ticket == null)
                 throw new System.Exception("Incorrect id");
-            ticket.Flight.Tickets.Remove(ticket);
             context.Tickets.Remove(ticket);
         }
 

@@ -25,9 +25,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 
         public Flight Create(Flight entity)
         {
-            entity.Id = context.Flights.Last().Id + 1;
-            entity.Departures = new List<Departure>();
-            entity.Tickets = new List<Ticket>();
             context.Flights.Add(entity);
             return entity;
         }
@@ -37,8 +34,6 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             Flight flight = GetById(id);
             if (flight == null)
                 throw new System.Exception("Incorrect id");
-            context.Tickets.RemoveAll(t=>t.IdFlight==flight.Id);
-            context.Departures.RemoveAll(d => d.IdFlight == flight.Id);
             context.Flights.Remove(flight);
         }
 

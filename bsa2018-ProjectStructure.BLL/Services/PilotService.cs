@@ -27,7 +27,9 @@ namespace bsa2018_ProjectStructure.BLL.Services
         {
             Validation(pilot);
             Pilot modelPilot = mapper.Map<PilotDTO, Pilot>(pilot);
-            return mapper.Map<Pilot, PilotDTO>(unitOfWork.Pilots.Create(modelPilot));
+            Pilot result = unitOfWork.Pilots.Create(modelPilot);
+            unitOfWork.SaveChages();
+            return mapper.Map<Pilot, PilotDTO>(result);
         }
 
         public void DeletePilot(int id)
@@ -35,6 +37,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
             try
             {
                 unitOfWork.Pilots.Delete(id);
+                unitOfWork.SaveChages();
             }
             catch (Exception ex)
             {
@@ -61,6 +64,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
                 Validation(pilot);
                 Pilot modelPilot = mapper.Map<PilotDTO, Pilot>(pilot);
                 Pilot result = unitOfWork.Pilots.Update(id, modelPilot);
+                unitOfWork.SaveChages();
                 return mapper.Map<Pilot, PilotDTO>(result);
             }
             catch (Exception ex)

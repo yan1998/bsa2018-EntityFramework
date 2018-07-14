@@ -27,7 +27,9 @@ namespace bsa2018_ProjectStructure.BLL.Services
         {
             Validation(stewardess);
             Stewardess modelStewardess = mapper.Map<StewardessDTO, Stewardess>(stewardess);
-            return mapper.Map<Stewardess, StewardessDTO>(unitOfWork.Stewardess.Create(modelStewardess));
+            Stewardess result= unitOfWork.Stewardess.Create(modelStewardess);
+            unitOfWork.SaveChages();
+            return mapper.Map<Stewardess, StewardessDTO>(result);
         }
 
         public void DeleteStewardess(int id)
@@ -35,6 +37,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
             try
             {
                 unitOfWork.Stewardess.Delete(id);
+                unitOfWork.SaveChages();
             }
             catch (Exception ex)
             {
@@ -61,6 +64,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
                 Validation(stewardess);
                 Stewardess modelStewardess = mapper.Map<StewardessDTO, Stewardess>(stewardess);
                 Stewardess result = unitOfWork.Stewardess.Update(id, modelStewardess);
+                unitOfWork.SaveChages();
                 return mapper.Map<Stewardess, StewardessDTO>(result);
             }
             catch (Exception ex)

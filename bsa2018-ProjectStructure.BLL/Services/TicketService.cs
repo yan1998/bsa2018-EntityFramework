@@ -27,7 +27,9 @@ namespace bsa2018_ProjectStructure.BLL.Services
         {
             Validation(ticket);
             Ticket modelTicket = mapper.Map<TicketDTO, Ticket>(ticket);
-            return mapper.Map<Ticket, TicketDTO>(unitOfWork.Tickets.Create(modelTicket));
+            Ticket result = unitOfWork.Tickets.Create(modelTicket);
+            unitOfWork.SaveChages();
+            return mapper.Map<Ticket, TicketDTO>(result);
         }
 
         public void DeleteTicket(int id)
@@ -35,6 +37,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
             try
             {
                 unitOfWork.Tickets.Delete(id);
+                unitOfWork.SaveChages();
             }
             catch (Exception ex)
             {
@@ -61,6 +64,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
                 Validation(ticket);
                 Ticket modelTicket = mapper.Map<TicketDTO, Ticket>(ticket);
                 Ticket result = unitOfWork.Tickets.Update(id, modelTicket);
+                unitOfWork.SaveChages();
                 return mapper.Map<Ticket, TicketDTO>(result);
             }
             catch (Exception ex)

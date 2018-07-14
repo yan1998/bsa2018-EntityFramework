@@ -27,7 +27,9 @@ namespace bsa2018_ProjectStructure.BLL.Services
         {
             Validation(aircraft);
             Aircraft modelAircraft = mapper.Map<AircraftDTO, Aircraft>(aircraft);
-            return mapper.Map<Aircraft, AircraftDTO>(unitOfWork.Aircrafts.Create(modelAircraft));
+            Aircraft result=unitOfWork.Aircrafts.Create(modelAircraft);
+            unitOfWork.SaveChages();
+            return mapper.Map<Aircraft, AircraftDTO>(result);
         }
 
         public void DeleteAircraft(int id)
@@ -35,6 +37,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
             try
             {
                 unitOfWork.Aircrafts.Delete(id);
+                unitOfWork.SaveChages();
             }
             catch (System.Exception ex)
             {
@@ -61,6 +64,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
                 Validation(aircraft);
                 Aircraft modelAircraft = mapper.Map<AircraftDTO, Aircraft>(aircraft);
                 Aircraft result = unitOfWork.Aircrafts.Update(id, modelAircraft);
+                unitOfWork.SaveChages();
                 return mapper.Map<Aircraft, AircraftDTO>(result);
             }
             catch (System.Exception ex)

@@ -27,7 +27,9 @@ namespace bsa2018_ProjectStructure.BLL.Services
         {
             Validation(departure);
             Departure modelDeparture = mapper.Map<DepartureDTO, Departure>(departure);
-            return mapper.Map<Departure, DepartureDTO>(unitOfWork.Departures.Create(modelDeparture));
+            Departure result = unitOfWork.Departures.Create(modelDeparture);
+            unitOfWork.SaveChages();
+            return mapper.Map<Departure, DepartureDTO>(result);
         }
 
         public void DeleteDeparture(int id)
@@ -35,6 +37,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
             try
             {
                 unitOfWork.Departures.Delete(id);
+                unitOfWork.SaveChages();
             }
             catch (Exception ex)
             {
@@ -61,6 +64,7 @@ namespace bsa2018_ProjectStructure.BLL.Services
                 Validation(departure);
                 Departure modelDeparture = mapper.Map<DepartureDTO, Departure>(departure);
                 Departure result = unitOfWork.Departures.Update(id, modelDeparture);
+                unitOfWork.SaveChages();
                 return mapper.Map<Departure, DepartureDTO>(result);
             }
             catch (Exception ex)

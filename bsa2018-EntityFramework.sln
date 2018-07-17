@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bsa2018-ProjectStructure.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bsa2018-ProjectStructure.Shared", "bsa2018-ProjectStructure.Shared\bsa2018-ProjectStructure.Shared.csproj", "{032D358D-DA68-4645-89C7-D59E228FA08D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bsa2018-EntityFramework.Tests", "bsa2018-EntityFramework.Tests\bsa2018-EntityFramework.Tests.csproj", "{804AAA68-B92A-43BB-801A-01F7A0DB1F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bsa2018-ProjectStructure.BLL.Tests", "bsa2018-EntityFramework.Tests\bsa2018-ProjectStructure.BLL.Tests.csproj", "{804AAA68-B92A-43BB-801A-01F7A0DB1F62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

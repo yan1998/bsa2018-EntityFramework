@@ -41,7 +41,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
         }
 
         [Test]
-        public void AddAircraft_When_corrcet_data_Then_count_equal_1()
+        public void AddAircraft_When_correct_data_Then_count_equal_1()
         {
             //assign
             AircraftDTO aircraft = new AircraftDTO()

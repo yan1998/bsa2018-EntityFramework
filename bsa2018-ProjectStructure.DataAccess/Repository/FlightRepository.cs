@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using bsa2018_ProjectStructure.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 {
@@ -13,33 +15,33 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             this.context = context;
         }
 
-        IEnumerable<Flight> IRepository<Flight>.GetAll()
+        public async Task<IEnumerable<Flight>> IRepository<Flight>.GetAll()
         {
-            return context.Flights.ToList();
+            return await context.Flights.ToListAsync();
         }
 
-        public Flight GetById(int id)
+        public async Task<Flight> GetById(int id)
         {
-            return context.Flights.FirstOrDefault(f => f.Id == id);
+            return await context.Flights.FirstOrDefaultAsync(f => f.Id == id);
         }
 
-        public Flight Create(Flight entity)
+        public async Task<Flight> Create(Flight entity)
         {
-            context.Flights.Add(entity);
+            await context.Flights.AddAsync(entity);
             return entity;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Flight flight = GetById(id);
+            Flight flight = await GetById(id);
             if (flight == null)
                 throw new System.Exception("Incorrect id");
             context.Flights.Remove(flight);
         }
 
-        public Flight Update(int id, Flight entity)
+        public async Task<Flight> Update(int id, Flight entity)
         {
-            Flight flight = GetById(id);
+            Flight flight =await GetById(id);
             if (flight == null)
                 throw new System.Exception("Incorrect id");
             flight.ArrivalTime = entity.ArrivalTime;

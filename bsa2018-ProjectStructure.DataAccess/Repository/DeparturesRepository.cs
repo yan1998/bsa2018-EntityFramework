@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using bsa2018_ProjectStructure.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 {
@@ -13,33 +15,33 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             this.context = context;
         }
 
-        public Departure Create(Departure entity)
+        public async Task<Departure> Create(Departure entity)
         {
-            context.Departures.Add(entity);
+            await context.Departures.AddAsync(entity);
             return entity;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Departure departure = GetById(id);
+            Departure departure = await GetById(id);
             if (departure == null)
                 throw new System.Exception("Incorrect id");
             context.Departures.Remove(departure);
         }
 
-        public IEnumerable<Departure> GetAll()
+        public async Task<IEnumerable<Departure>> GetAll()
         {
-            return context.Departures.ToList();
+            return await context.Departures.ToListAsync();
         }
 
-        public Departure GetById(int id)
+        public async Task<Departure> GetById(int id)
         {
-            return context.Departures.FirstOrDefault(d => d.Id == id);
+            return await context.Departures.FirstOrDefaultAsync(d => d.Id == id);
         }
 
-        public Departure Update(int id, Departure entity)
+        public async Task<Departure> Update(int id, Departure entity)
         {
-            Departure departure = GetById(id);
+            Departure departure = await GetById(id);
             if (departure == null)
                 throw new System.Exception("Incorrect id");
             departure.DepartureTime = entity.DepartureTime;

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using bsa2018_ProjectStructure.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 {
@@ -13,33 +15,33 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             this.context = context;
         }
 
-        public Ticket Create(Ticket entity)
+        public async Task<Ticket> Create(Ticket entity)
         {
-            context.Tickets.Add(entity);
+            await context.Tickets.AddAsync(entity);
             return entity;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Ticket ticket = GetById(id);
+            Ticket ticket = await GetById(id);
             if (ticket == null)
                 throw new System.Exception("Incorrect id");
             context.Tickets.Remove(ticket);
         }
 
-        public IEnumerable<Ticket> GetAll()
+        public async Task<IEnumerable<Ticket>> GetAll()
         {
-            return context.Tickets.ToList();
+            return await context.Tickets.ToListAsync();
         }
 
-        public Ticket GetById(int id)
+        public async Task<Ticket> GetById(int id)
         {
-            return context.Tickets.FirstOrDefault(t => t.Id == id);
+            return await context.Tickets.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public Ticket Update(int id, Ticket entity)
+        public async Task<Ticket> Update(int id, Ticket entity)
         {
-            Ticket ticket = GetById(id);
+            Ticket ticket = await GetById(id);
             if (ticket == null)
                 throw new System.Exception("Incorrect id");
             ticket.Cost = entity.Cost;

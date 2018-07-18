@@ -1,6 +1,8 @@
 ﻿using bsa2018_ProjectStructure.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 {
@@ -13,15 +15,15 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             this.context = context;
         }
 
-        public Aircraft Create(Aircraft entity)
+        public async Task<Aircraft> Create(Aircraft entity)
         {
-            context.Aicrafts.Add(entity); 
+            await context.Aicrafts.AddAsync(entity); 
             return entity;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Aircraft aircraft = GetById(id);
+            Aircraft aircraft = await GetById(id);
             if (aircraft == null)
                 throw new System.Exception("Incorrect id");
             //foreach (var departure in aircraft.Departures)
@@ -33,19 +35,19 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             context.Aicrafts.Remove(aircraft);
         }
 
-        public IEnumerable<Aircraft> GetAll()
+        public async Task<IEnumerable<Aircraft>> GetAll()
         {
-            return context.Aicrafts.ToList();
+            return await context.Aicrafts.ToListAsync();
         }
 
-        public Aircraft GetById(int id)
+        public async Task<Aircraft> GetById(int id)
         {
-            return context.Aicrafts.FirstOrDefault(c => c.Id == id);
+            return await context.Aicrafts.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public Aircraft Update(int id,Aircraft entity)
+        public async Task<Aircraft> Update(int id,Aircraft entity)
         {
-            Aircraft aircraft = GetById(id);
+            Aircraft aircraft = await GetById(id);
             if (aircraft == null)
                 throw new System.Exception("Incorrect id");
             aircraft.IdAircraftType = entity.IdAircraftType;

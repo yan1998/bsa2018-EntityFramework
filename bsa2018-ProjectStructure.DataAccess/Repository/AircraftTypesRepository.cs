@@ -1,6 +1,8 @@
 ﻿using bsa2018_ProjectStructure.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 {
@@ -13,39 +15,33 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             this.context = context;
         }
 
-        public AircraftType Create(AircraftType entity)
+        public async Task<AircraftType> Create(AircraftType entity)
         {
-            context.AircraftTypes.Add(entity);
+            await context.AircraftTypes.AddAsync(entity);
             return entity;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            AircraftType aircraftType = GetById(id);
+            AircraftType aircraftType = await GetById(id);
             if (aircraftType == null)
                 throw new System.Exception("Incorrect id");
-            //foreach (var departure in aircraftType.Aircraft.Departures)
-            //{
-            //    departure.Flight.Departures.Remove(departure);
-            //    context.Departures.Remove(departure);
-            //}
-            //context.Aicrafts.Remove(aircraftType.Aircraft);
             context.AircraftTypes.Remove(aircraftType);
         }
 
-        public IEnumerable<AircraftType> GetAll()
+        public async Task<IEnumerable<AircraftType>> GetAll()
         {
-            return context.AircraftTypes.ToList();
+            return await context.AircraftTypes.ToListAsync();
         }
 
-        public AircraftType GetById(int id)
+        public async Task<AircraftType> GetById(int id)
         {
-            return context.AircraftTypes.FirstOrDefault(c => c.Id == id);
+            return await context.AircraftTypes.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public AircraftType Update(int id, AircraftType entity)
+        public async Task<AircraftType> Update(int id, AircraftType entity)
         {
-            AircraftType aircraftType = GetById(id);
+            AircraftType aircraftType =await GetById(id);
             if (aircraftType == null)
                 throw new System.Exception("Incorrect id");
             aircraftType.LoadCapacity = entity.LoadCapacity;

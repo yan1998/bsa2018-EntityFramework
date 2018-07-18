@@ -1,6 +1,8 @@
 ﻿using bsa2018_ProjectStructure.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.DataAccess.Interfaces
 {
@@ -13,33 +15,33 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             this.context = context;
         }
 
-        public Crew Create(Crew entity)
+        public async Task<Crew> Create(Crew entity)
         {
-            context.Crews.Add(entity);
+            await context.Crews.AddAsync(entity);
             return entity;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Crew crew = GetById(id);
+            Crew crew = await GetById(id);
             if (crew == null)
                 throw new System.Exception("Incorrect id");
             context.Crews.Remove(crew);
         }
 
-        public IEnumerable<Crew> GetAll()
+        public async Task<IEnumerable<Crew>> GetAll()
         {
-            return context.Crews.ToList();
+            return await context.Crews.ToListAsync();
         }
 
-        public Crew GetById(int id)
+        public async Task<Crew> GetById(int id)
         {
-            return context.Crews.FirstOrDefault(c => c.Id == id);
+            return await context.Crews.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public Crew Update(int id, Crew entity)
+        public async Task<Crew> Update(int id, Crew entity)
         {
-            Crew crew = GetById(id);
+            Crew crew = await GetById(id);
             if (crew == null)
                 throw new System.Exception("Incorrect id");
             crew.IdPilot = entity.IdPilot;

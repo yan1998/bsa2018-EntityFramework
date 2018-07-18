@@ -1,6 +1,7 @@
 ﻿using bsa2018_ProjectStructure.BLL.Interfaces;
 using bsa2018_ProjectStructure.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.Controllers
 {
@@ -17,25 +18,25 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // GET: api/Tickets
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            return Json(ticketService.GetAllTickets());
+            return Json(await ticketService.GetAllTickets());
         }
 
         // GET: api/Tickets/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            return Json(ticketService.GetTicket(id));
+            return Json(await ticketService.GetTicket(id));
         }
         
         // POST: api/Tickets
         [HttpPost]
-        public JsonResult Post([FromBody]TicketDTO ticket)
+        public async Task<JsonResult> Post([FromBody]TicketDTO ticket)
         {
             try
             {
-                return Json(ticketService.AddTicket(ticket));
+                return Json(await ticketService.AddTicket(ticket));
             }
             catch (System.Exception ex)
             {
@@ -46,11 +47,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // PUT: api/Tickets/5
         [HttpPut("{id}")]
-        public JsonResult Put(int id, [FromBody]TicketDTO ticket)
+        public async Task<JsonResult> Put(int id, [FromBody]TicketDTO ticket)
         {
             try
             {
-                return Json(ticketService.UpdateTicket(id, ticket));
+                return Json(await ticketService.UpdateTicket(id, ticket));
             }
             catch (System.Exception ex)
             {
@@ -61,11 +62,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
-                ticketService.DeleteTicket(id);
+                await ticketService.DeleteTicket(id);
             }
             catch (System.Exception)
             {

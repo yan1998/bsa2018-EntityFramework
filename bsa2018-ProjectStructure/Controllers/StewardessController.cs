@@ -1,6 +1,7 @@
 ﻿using bsa2018_ProjectStructure.BLL.Interfaces;
 using bsa2018_ProjectStructure.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.Controllers
 {
@@ -17,25 +18,25 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // GET: api/Stewardess
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            return Json(stewardessService.GetAllStewardess());
+            return Json(await stewardessService.GetAllStewardess());
         }
 
         // GET: api/Stewardess/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            return Json(stewardessService.GetStewardess(id));
+            return Json(await stewardessService.GetStewardess(id));
         }
         
         // POST: api/Stewardess
         [HttpPost]
-        public JsonResult Post([FromBody]StewardessDTO stewardess)
+        public async Task<JsonResult> Post([FromBody]StewardessDTO stewardess)
         {
             try
             {
-                return Json(stewardessService.AddStewardess(stewardess));
+                return Json(await stewardessService.AddStewardess(stewardess));
             }
             catch (System.Exception ex)
             {
@@ -46,11 +47,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // PUT: api/Stewardess/5
         [HttpPut("{id}")]
-        public JsonResult Put(int id, [FromBody]StewardessDTO stewardess)
+        public async Task<JsonResult> Put(int id, [FromBody]StewardessDTO stewardess)
         {
             try
             {
-                return Json(stewardessService.UpdateStewardess(id, stewardess));
+                return Json(await stewardessService.UpdateStewardess(id, stewardess));
             }
             catch (System.Exception ex)
             {
@@ -61,11 +62,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
-                stewardessService.DeleteStewardess(id);
+                await stewardessService.DeleteStewardess(id);
             }
             catch (System.Exception)
             {

@@ -1,6 +1,7 @@
 ﻿using bsa2018_ProjectStructure.BLL.Interfaces;
 using bsa2018_ProjectStructure.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.Controllers
 {
@@ -18,25 +19,25 @@ namespace bsa2018_ProjectStructure.Controllers
         // GET: api/Departures
         [HttpGet]
         [HttpGet("{id}")]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            return Json(departureService.GetAllDepartures());
+            return Json(await departureService.GetAllDepartures());
         }
 
         // GET: api/Departures/5
         [HttpGet("{id}", Name = "Get")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            return Json(departureService.GetDeparture(id));
+            return Json(await departureService.GetDeparture(id));
         }
         
         // POST: api/Departures
         [HttpPost]
-        public JsonResult Post([FromBody]DepartureDTO departure)
+        public async Task<JsonResult> Post([FromBody]DepartureDTO departure)
         {
             try
             {
-                return Json(departureService.AddDeparture(departure));
+                return Json(await departureService.AddDeparture(departure));
             }
             catch (System.Exception ex)
             {
@@ -47,11 +48,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // PUT: api/Departures/5
         [HttpPut("{id}")]
-        public JsonResult Put(int id, [FromBody]DepartureDTO departure)
+        public async Task<JsonResult> Put(int id, [FromBody]DepartureDTO departure)
         {
             try
             {
-                return Json(departureService.UpdateDeparture(id, departure));
+                return Json(await departureService.UpdateDeparture(id, departure));
             }
             catch (System.Exception ex)
             {
@@ -62,11 +63,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
-                departureService.DeleteDeparture(id);
+                await departureService.DeleteDeparture(id);
             }
             catch (System.Exception)
             {

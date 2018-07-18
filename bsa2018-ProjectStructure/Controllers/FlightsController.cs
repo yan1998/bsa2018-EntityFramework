@@ -2,6 +2,7 @@
 using bsa2018_ProjectStructure.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using bsa2018_ProjectStructure.Shared.DTO;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.Controllers
 {
@@ -17,25 +18,25 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // GET: api/flights
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            return Json(flightService.GetAllFlights());
+            return Json(await flightService.GetAllFlights());
         }
 
         // GET: api/flights/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            return Json(flightService.GetFlight(id));
+            return Json(await flightService.GetFlight(id));
         }
 
         // POST api/flights
         [HttpPost]
-        public JsonResult Post([FromBody]FlightDTO flight)
+        public async Task<JsonResult> Post([FromBody]FlightDTO flight)
         {
             try
             {
-                return Json(flightService.AddFlight(flight));
+                return Json(await flightService.AddFlight(flight));
             }
             catch (System.Exception ex)
             {
@@ -46,11 +47,11 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // PUT api/flights/5
         [HttpPut("{id}")]
-        public JsonResult Put(int id, [FromBody]FlightDTO flight)
+        public async Task<JsonResult> Put(int id, [FromBody]FlightDTO flight)
         {
             try
             {
-                return Json(flightService.UpdateFlight(id, flight));
+                return Json(await flightService.UpdateFlight(id, flight));
             }
             catch (System.Exception ex)
             {
@@ -61,11 +62,11 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // DELETE api/flights/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
-                flightService.DeleteFlight(id);
+                await flightService.DeleteFlight(id);
             }
             catch (System.Exception)
             {

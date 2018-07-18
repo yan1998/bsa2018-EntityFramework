@@ -1,6 +1,7 @@
 ﻿using bsa2018_ProjectStructure.BLL.Interfaces;
 using bsa2018_ProjectStructure.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.Controllers
 {
@@ -17,25 +18,25 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // GET: api/Crews
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            return Json(crewService.GetAllCrews());
+            return Json(await crewService.GetAllCrews());
         }
 
         // GET: api/Crews/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            return Json(crewService.GetCrew(id));
+            return Json(await crewService.GetCrew(id));
         }
         
         // POST: api/Crews
         [HttpPost]
-        public JsonResult Post([FromBody]CrewDTO value)
+        public async Task<JsonResult> Post([FromBody]CrewDTO value)
         {
             try
             {
-                return Json(crewService.AddCrew(value));
+                return Json(await crewService.AddCrew(value));
             }
             catch (System.Exception ex)
             {
@@ -46,11 +47,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // PUT: api/Crews/5
         [HttpPut("{id}")]
-        public JsonResult Put(int id, [FromBody]CrewDTO crew)
+        public async Task<JsonResult> Put(int id, [FromBody]CrewDTO crew)
         {
             try
             {
-                return Json(crewService.UpdateCrew(id, crew));
+                return Json(await crewService.UpdateCrew(id, crew));
             }
             catch (System.Exception ex)
             {
@@ -61,11 +62,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
-                crewService.DeleteCrew(id);
+                await crewService.DeleteCrew(id);
             }
             catch (System.Exception)
             {

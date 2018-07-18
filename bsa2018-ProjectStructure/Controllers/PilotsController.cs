@@ -1,6 +1,7 @@
 ﻿using bsa2018_ProjectStructure.BLL.Interfaces;
 using bsa2018_ProjectStructure.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.Controllers
 {
@@ -17,25 +18,25 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // GET: api/Pilots
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            return Json(pilotService.GetAllPilots());
+            return Json(await pilotService.GetAllPilots());
         }
 
         // GET: api/Pilots/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            return Json(pilotService.GetPilot(id));
+            return Json(await pilotService.GetPilot(id));
         }
         
         // POST: api/Pilots
         [HttpPost]
-        public JsonResult Post([FromBody]PilotDTO pilot)
+        public async Task<JsonResult> Post([FromBody]PilotDTO pilot)
         {
             try
             {
-                return Json(pilotService.AddPilot(pilot));
+                return Json(await pilotService.AddPilot(pilot));
             }
             catch (System.Exception ex)
             {
@@ -46,11 +47,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // PUT: api/Pilots/5
         [HttpPut("{id}")]
-        public JsonResult Put(int id, [FromBody]PilotDTO pilot)
+        public async Task<JsonResult> Put(int id, [FromBody]PilotDTO pilot)
         {
             try
             {
-                return Json(pilotService.UpdatePilot(id, pilot));
+                return Json(await pilotService.UpdatePilot(id, pilot));
             }
             catch (System.Exception ex)
             {
@@ -61,11 +62,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
-                pilotService.DeletePilot(id);
+                await pilotService.DeletePilot(id);
             }
             catch (System.Exception)
             {

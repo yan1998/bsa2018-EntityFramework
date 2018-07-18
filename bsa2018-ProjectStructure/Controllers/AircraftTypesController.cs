@@ -1,6 +1,7 @@
 ﻿using bsa2018_ProjectStructure.BLL.Interfaces;
 using bsa2018_ProjectStructure.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.Controllers
 {
@@ -17,25 +18,25 @@ namespace bsa2018_ProjectStructure.Controllers
 
         // GET: api/AircraftTypes
         [HttpGet]
-        public JsonResult Get()
+        public async Task<JsonResult> Get()
         {
-            return Json(aircraftTypesService.GetAllAircraftTypes());
+            return Json(await aircraftTypesService.GetAllAircraftTypes());
         }
 
         // GET: api/AircraftTypes/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<JsonResult> Get(int id)
         {
-            return Json(aircraftTypesService.GetAircraftType(id));
+            return Json(await aircraftTypesService.GetAircraftType(id));
         }
         
         // POST: api/AircraftTypes
         [HttpPost]
-        public JsonResult Post([FromBody]AircraftTypeDTO aircraftType)
+        public async Task<JsonResult> Post([FromBody]AircraftTypeDTO aircraftType)
         {
             try
             {
-                return Json(aircraftTypesService.AddAircraftType(aircraftType));
+                return Json(await aircraftTypesService.AddAircraftType(aircraftType));
             }
             catch (System.Exception ex)
             {
@@ -46,11 +47,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // PUT: api/AircraftTypes/5
         [HttpPut("{id}")]
-        public JsonResult Put(int id, [FromBody]AircraftTypeDTO aircraftType)
+        public async Task<JsonResult> Put(int id, [FromBody]AircraftTypeDTO aircraftType)
         {
             try
             {
-                return Json(aircraftTypesService.UpdateAircraftType(id, aircraftType));
+                return Json(await aircraftTypesService.UpdateAircraftType(id, aircraftType));
             }
             catch (System.Exception ex)
             {
@@ -62,11 +63,11 @@ namespace bsa2018_ProjectStructure.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
-                aircraftTypesService.DeleteAircraftType(id);
+                await aircraftTypesService.DeleteAircraftType(id);
             }
             catch (System.Exception)
             {

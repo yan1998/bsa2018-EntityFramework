@@ -32,7 +32,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             departureService = new DepartureService(fakeUnitOfWork, mapper);
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void TestSetup()
         {
             A.CallTo(() => fakeDepartureRepository.Create(A<Departure>._)).Invokes((Departure d) => { d.Id = Departures.Count + 1; Departures.Add(d); });

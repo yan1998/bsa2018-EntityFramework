@@ -31,7 +31,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             crewService = new CrewService(fakeUnitOfWork, mapper);
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void TestSetup()
         {
             A.CallTo(() => fakeCrewRepository.Create(A<Crew>._)).Invokes((Crew a) => { a.Id = Crews.Count + 1; Crews.Add(a); });

@@ -31,7 +31,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             ticketService = new TicketService(fakeUnitOfWork, mapper);
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void TestSetup()
         {
             A.CallTo(() => fakeTicketRepository.Create(A<Ticket>._)).Invokes((Ticket a) => { a.Id = Tickets.Count + 1; Tickets.Add(a); });

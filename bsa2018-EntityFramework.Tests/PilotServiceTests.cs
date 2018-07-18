@@ -31,7 +31,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             pilotService = new PilotService(fakeUnitOfWork, mapper);
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void TestSetup()
         {
             A.CallTo(() => fakePilotRepository.Create(A<Pilot>._)).Invokes((Pilot a) => { a.Id = Pilots.Count + 1; Pilots.Add(a); });

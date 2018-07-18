@@ -31,7 +31,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             flightService = new FlightService(fakeUnitOfWork, mapper);
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void TestSetup()
         {
             A.CallTo(() => fakeFlightRepository.Create(A<Flight>._)).Invokes((Flight a) => { a.Id = Flights.Count + 1; Flights.Add(a); });

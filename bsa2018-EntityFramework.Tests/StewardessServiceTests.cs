@@ -31,7 +31,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             stewardessService = new StewardessService(fakeUnitOfWork, mapper);
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void TestSetup()
         {
             A.CallTo(() => fakeStewardessRepository.Create(A<Stewardess>._)).Invokes((Stewardess a) => { a.Id = Stewardess.Count + 1; Stewardess.Add(a); });

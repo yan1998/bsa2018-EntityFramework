@@ -31,7 +31,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             aircraftTypesService = new AircraftTypesService(fakeUnitOfWork, mapper);
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void TestSetup()
         {
             A.CallTo(() => fakeAircraftTypeRepository.Create(A<AircraftType>._)).Invokes((AircraftType a) => { a.Id = AircraftTypes.Count + 1; AircraftTypes.Add(a); });

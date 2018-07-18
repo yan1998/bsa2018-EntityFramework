@@ -12,13 +12,14 @@ namespace bsa2018_ProjectStructure.Controllers
 
         public AircraftsController(IAircraftService aircraftService)
         {
+
             this.aircraftService = aircraftService;
         }
 
         // GET: api/Aircrafts
         [HttpGet]
         public JsonResult Get()
-        {
+        { 
             return Json(aircraftService.GetAllAircrafts());
         }
 
@@ -50,6 +51,7 @@ namespace bsa2018_ProjectStructure.Controllers
         {
             try
             {
+                HttpContext.Response.StatusCode = 204;
                 return Json(aircraftService.UpdateAircraft(id, aircraft));
             }
             catch (System.Exception ex)
@@ -65,6 +67,7 @@ namespace bsa2018_ProjectStructure.Controllers
         {
             try
             {
+                HttpContext.Response.StatusCode = 204;
                 aircraftService.DeleteAircraft(id);
             }
             catch (System.Exception)

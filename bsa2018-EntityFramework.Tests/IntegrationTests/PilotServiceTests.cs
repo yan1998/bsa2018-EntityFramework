@@ -8,6 +8,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Tests.IntegrationTests
 {
@@ -37,45 +38,45 @@ namespace bsa2018_ProjectStructure.BLL.Tests.IntegrationTests
         }
 
         [Test, Order(1)]
-        public void AddPilot_When_correct_data_Then_check_exists()
+        public async Task AddPilot_When_correct_data_Then_check_exists()
         {
             //assing
-            pilot.Id = pilotService.AddPilot(pilot).Id;
+            pilot.Id = pilotService.AddPilot(pilot).Result.Id;
 
             //act
-            PilotDTO checkPilot = pilotService.GetPilot(pilot.Id);
+            PilotDTO checkPilot = await pilotService.GetPilot(pilot.Id);
             //assert
             Assert.IsNotNull(checkPilot);
         }
 
         [Test, Order(2)]
-        public void UpdatePilot()
+        public async Task UpdatePilot()
         {
             //assign
             pilot.Name = "Vladimir";
             //act
-            pilotService.UpdatePilot(pilot.Id,pilot);
-            PilotDTO checkPilot = pilotService.GetPilot(pilot.Id);
+            await pilotService.UpdatePilot(pilot.Id,pilot);
+            PilotDTO checkPilot = await pilotService.GetPilot(pilot.Id);
 
             //assert
             Assert.That(checkPilot.Name== "Vladimir");
         }
 
         [Test, Order(3)]
-        public void DeletePilot()
+        public async Task DeletePilot()
         {
             //act
-            pilotService.DeletePilot(pilot.Id);
-            PilotDTO result=pilotService.GetPilot(pilot.Id);
+            await pilotService.DeletePilot(pilot.Id);
+            PilotDTO result= await pilotService.GetPilot(pilot.Id);
 
             //assert
            Assert.IsNull(result);
         }
 
         [OneTimeTearDown]
-        public void TestDown()
+        public async Task TestDown()
         {
-            pilotService.DeletePilot(pilot.Id);
+            await pilotService.DeletePilot(pilot.Id);
         }
     }
 }

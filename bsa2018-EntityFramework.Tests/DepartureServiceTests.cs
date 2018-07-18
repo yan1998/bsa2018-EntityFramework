@@ -71,7 +71,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => departureService.AddDeparture(departure));
+            Assert.ThrowsAsync<Exception>(async () => await departureService.AddDeparture(departure));
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => departureService.AddDeparture(departure));
+            Assert.ThrowsAsync<Exception>(async () => await departureService.AddDeparture(departure));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => departureService.AddDeparture(departure));
+            Assert.ThrowsAsync<Exception>(async() =>await  departureService.AddDeparture(departure));
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => departureService.UpdateDeparture(1, departure));
+            Assert.ThrowsAsync<Exception>(async () => await departureService.UpdateDeparture(1, departure));
         }
     }
 }

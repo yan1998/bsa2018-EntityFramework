@@ -67,7 +67,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => ticketService.AddTicket(ticket));
+            Assert.ThrowsAsync<Exception>(() => ticketService.AddTicket(ticket));
         }
 
 
@@ -82,7 +82,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => ticketService.AddTicket(ticket));
+            Assert.ThrowsAsync<Exception>(() => ticketService.AddTicket(ticket));
         }
 
         [Test]

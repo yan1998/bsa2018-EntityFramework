@@ -66,7 +66,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => crewService.AddCrew(crew));
+            Assert.ThrowsAsync<Exception>(async () => await crewService.AddCrew(crew));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => crewService.AddCrew(crew));
+            Assert.ThrowsAsync<Exception>(async () => await crewService.AddCrew(crew));
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => crewService.UpdateCrew(1, crew));
+            Assert.ThrowsAsync<Exception>(async () => await crewService.UpdateCrew(1, crew));
         }
     }
 }

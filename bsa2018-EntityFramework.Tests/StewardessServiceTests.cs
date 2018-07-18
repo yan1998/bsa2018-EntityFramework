@@ -68,7 +68,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => stewardessService.AddStewardess(stewardess));
+            Assert.ThrowsAsync<Exception>(() => stewardessService.AddStewardess(stewardess));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => stewardessService.AddStewardess(stewardess));
+            Assert.ThrowsAsync<Exception>(() => stewardessService.AddStewardess(stewardess));
         }
 
         [Test]

@@ -11,6 +11,7 @@ using bsa2018_ProjectStructure.DataAccess.Repository;
 using bsa2018_ProjectStructure.BLL.Services;
 using AutoMapper;
 using bsa2018_ProjectStructure.Shared.DTO;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Tests
 {
@@ -72,7 +73,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => { aircraftService.AddAircraft(aircraft); });
+            Assert.ThrowsAsync<Exception>(async () => { await aircraftService.AddAircraft(aircraft); });
         }
 
         [Test]
@@ -87,7 +88,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(()=> { aircraftService.AddAircraft(aircraft);});
+            Assert.ThrowsAsync<Exception>(async ()=> { await aircraftService.AddAircraft(aircraft);});
         }
 
         [Test]
@@ -102,7 +103,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => { aircraftService.AddAircraft(aircraft); });
+            Assert.ThrowsAsync<Exception>(async () => { await aircraftService.AddAircraft(aircraft); });
         }
 
         [Test]
@@ -137,7 +138,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(()=> { aircraftService.UpdateAircraft(1, aircraft); });
+            Assert.ThrowsAsync<Exception>(async()=> { await aircraftService.UpdateAircraft(1, aircraft); });
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => { aircraftService.UpdateAircraft(1, aircraft); });
+            Assert.ThrowsAsync<Exception>(async () => { await aircraftService.UpdateAircraft(1, aircraft); });
         }
     }
 }

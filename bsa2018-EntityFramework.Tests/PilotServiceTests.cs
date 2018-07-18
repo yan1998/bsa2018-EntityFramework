@@ -70,7 +70,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => pilotService.AddPilot(pilot));
+            Assert.ThrowsAsync<Exception>(() => pilotService.AddPilot(pilot));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => pilotService.AddPilot(pilot));
+            Assert.ThrowsAsync<Exception>(() => pilotService.AddPilot(pilot));
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => pilotService.AddPilot(pilot));
+            Assert.ThrowsAsync<Exception>(() => pilotService.AddPilot(pilot));
         }
 
         [Test]

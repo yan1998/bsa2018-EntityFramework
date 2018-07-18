@@ -70,7 +70,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(()=> flightService.AddFlight(flight));
+            Assert.ThrowsAsync<Exception>(()=> flightService.AddFlight(flight));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => flightService.AddFlight(flight));
+            Assert.ThrowsAsync<Exception>(() => flightService.AddFlight(flight));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => flightService.AddFlight(flight));
+            Assert.ThrowsAsync<Exception>(() => flightService.AddFlight(flight));
         }
 
         [Test]

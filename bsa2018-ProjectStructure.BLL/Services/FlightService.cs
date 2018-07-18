@@ -7,6 +7,7 @@ using AutoMapper;
 using bsa2018_ProjectStructure.DataAccess.Model;
 using bsa2018_ProjectStructure.BLL.Validators;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace bsa2018_ProjectStructure.BLL.Services
             validator = new FlightValidator();
         }
 
-        public FlightDTO AddFlight(FlightDTO flight)
+        public async Task<FlightDTO> AddFlight(FlightDTO flight)
         {
             Validation(flight);
             Flight modelFlight = mapper.Map<FlightDTO, Flight>(flight);
-            Flight result = unitOfWork.Flights.Create(modelFlight);
-            unitOfWork.SaveChages();
+            Flight result = await unitOfWork.Flights.Create(modelFlight);
+            await unitOfWork.SaveChangesAsync();
             return mapper.Map<Flight, FlightDTO>(result);
         }
 
-        public void DeleteFlight(int id)
+        public async Task DeleteFlight(int id)
         {
             try
             {
-                unitOfWork.Flights.Delete(id);
-                unitOfWork.SaveChages();
+                await unitOfWork.Flights.Delete(id);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -45,26 +46,26 @@ namespace bsa2018_ProjectStructure.BLL.Services
             }
         }
 
-        public List<FlightDTO> GetAllFlights()
+        public async Task<List<FlightDTO>> GetAllFlights()
         {
-            IEnumerable<Flight> flight=unitOfWork.Flights.GetAll();
+            IEnumerable<Flight> flight=await unitOfWork.Flights.GetAll();
             return mapper.Map<IEnumerable<Flight>, List<FlightDTO>>(flight);
         }
 
-        public FlightDTO GetFlight(int id)
+        public async Task<FlightDTO> GetFlight(int id)
         {
-            Flight flight = unitOfWork.Flights.GetById(id);
+            Flight flight = await unitOfWork.Flights.GetById(id);
             return mapper.Map<Flight,FlightDTO>(flight);
         }
 
-        public FlightDTO UpdateFlight(int id,FlightDTO flight)
+        public async Task<FlightDTO> UpdateFlight(int id,FlightDTO flight)
         {
             try
             {
                 Validation(flight);
                 Flight modelFlight = mapper.Map<FlightDTO, Flight>(flight);
-                Flight result = unitOfWork.Flights.Update(id, modelFlight);
-                unitOfWork.SaveChages();
+                Flight result = await unitOfWork.Flights.Update(id, modelFlight);
+                await unitOfWork.SaveChangesAsync();
                 return mapper.Map<Flight, FlightDTO>(result);
             }
             catch (Exception ex)

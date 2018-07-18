@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Tests.IntegrationTests
 {
@@ -34,45 +35,45 @@ namespace bsa2018_ProjectStructure.BLL.Tests.IntegrationTests
         }
 
         [Test, Order(1)]
-        public void AddCrew_When_correct_data_Then_check_exists()
+        public async Task AddCrew_When_correct_data_Then_check_exists()
         {
             //assing
-            crew.Id = crewService.AddCrew(crew).Id;
+            crew.Id = crewService.AddCrew(crew).Result.Id;
 
             //act
-            CrewDTO checkCrew = crewService.GetCrew(crew.Id);
+            CrewDTO checkCrew = await crewService.GetCrew(crew.Id);
             //assert
             Assert.IsNotNull(checkCrew);
         }
 
         [Test, Order(2)]
-        public void UpdateCrew()
+        public async Task UpdateCrew()
         {
             //assign
             crew.IdPilot = 2;
             //act
-            crewService.UpdateCrew(crew.Id, crew);
-            CrewDTO checkCrew = crewService.GetCrew(crew.Id);
+            await crewService.UpdateCrew(crew.Id, crew);
+            CrewDTO checkCrew = await crewService.GetCrew(crew.Id);
 
             //assert
             Assert.That(checkCrew.IdPilot == 2);
         }
 
         [Test, Order(3)]
-        public void DeleteCrew()
+        public async Task DeleteCrew()
         {
             //act
-            crewService.DeleteCrew(crew.Id);
-            CrewDTO result = crewService.GetCrew(crew.Id);
+            await crewService.DeleteCrew(crew.Id);
+            CrewDTO result = await crewService.GetCrew(crew.Id);
 
             //assert
             Assert.IsNull(result);
         }
 
         [OneTimeTearDown]
-        public void TestDown()
+        public async Task TestDown()
         {
-            crewService.DeleteCrew(crew.Id);
+            await crewService.DeleteCrew(crew.Id);
         }
     }
 }

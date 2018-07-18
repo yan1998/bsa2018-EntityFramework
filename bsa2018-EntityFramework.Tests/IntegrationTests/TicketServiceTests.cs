@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Tests.IntegrationTests
 {
@@ -34,45 +35,45 @@ namespace bsa2018_ProjectStructure.BLL.Tests.IntegrationTests
         }
 
         [Test, Order(1)]
-        public void AddTicket_When_correct_data_Then_check_exists()
+        public async Task AddTicket_When_correct_data_Then_check_exists()
         {
             //assing
-            ticket.Id = ticketService.AddTicket(ticket).Id;
+            ticket.Id = ticketService.AddTicket(ticket).Result.Id;
 
             //act
-            TicketDTO checkTicket = ticketService.GetTicket(ticket.Id);
+            TicketDTO checkTicket = await ticketService.GetTicket(ticket.Id);
             //assert
             Assert.IsNotNull(checkTicket);
         }
 
         [Test, Order(2)]
-        public void UpdateTicket()
+        public async Task UpdateTicket()
         {
             //assign
             ticket.Cost= 150;
             //act
-            ticketService.UpdateTicket(ticket.Id, ticket);
-            TicketDTO checkTicket = ticketService.GetTicket(ticket.Id);
+            await ticketService.UpdateTicket(ticket.Id, ticket);
+            TicketDTO checkTicket = await ticketService.GetTicket(ticket.Id);
 
             //assert
             Assert.That(checkTicket.Cost == 150);
         }
 
         [Test, Order(3)]
-        public void DeleteTicket()
+        public async Task DeleteTicket()
         {
             //act
-            ticketService.DeleteTicket(ticket.Id);
-            TicketDTO result = ticketService.GetTicket(ticket.Id);
+            await ticketService.DeleteTicket(ticket.Id);
+            TicketDTO result = await ticketService.GetTicket(ticket.Id);
 
             //assert
             Assert.IsNull(result);
         }
 
         [OneTimeTearDown]
-        public void TestDown()
+        public async Task TestDown()
         {
-            ticketService.DeleteTicket(ticket.Id);
+            await ticketService.DeleteTicket(ticket.Id);
         }
     }
 }

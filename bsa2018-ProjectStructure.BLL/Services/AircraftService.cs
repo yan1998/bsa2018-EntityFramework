@@ -7,6 +7,7 @@ using bsa2018_ProjectStructure.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace bsa2018_ProjectStructure.BLL.Services
             validator = new AircraftValidator();
         }
 
-        public AircraftDTO AddAircraft(AircraftDTO aircraft)
+        public async Task<AircraftDTO> AddAircraft(AircraftDTO aircraft)
         {
             Validation(aircraft);
             Aircraft modelAircraft = mapper.Map<AircraftDTO, Aircraft>(aircraft);
-            Aircraft result=unitOfWork.Aircrafts.Create(modelAircraft);
-            unitOfWork.SaveChages();
+            Aircraft result=await unitOfWork.Aircrafts.Create(modelAircraft);
+            await unitOfWork.SaveChangesAsync();
             return mapper.Map<Aircraft, AircraftDTO>(result);
         }
 
-        public void DeleteAircraft(int id)
+        public async Task DeleteAircraft(int id)
         {
             try
             {
-                unitOfWork.Aircrafts.Delete(id);
-                unitOfWork.SaveChages();
+                await unitOfWork.Aircrafts.Delete(id);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (System.Exception ex)
             {
@@ -45,26 +46,26 @@ namespace bsa2018_ProjectStructure.BLL.Services
             }
         }
 
-        public AircraftDTO GetAircraft(int id)
+        public async Task<AircraftDTO> GetAircraft(int id)
         {
-            Aircraft aircraft = unitOfWork.Aircrafts.GetById(id);
+            Aircraft aircraft = await unitOfWork.Aircrafts.GetById(id);
             return mapper.Map<Aircraft, AircraftDTO>(aircraft);
         }
 
-        public List<AircraftDTO> GetAllAircrafts()
+        public async Task<List<AircraftDTO>> GetAllAircrafts()
         {
-            IEnumerable<Aircraft> aircrafts = unitOfWork.Aircrafts.GetAll();
+            IEnumerable<Aircraft> aircrafts = await unitOfWork.Aircrafts.GetAll();
             return mapper.Map<IEnumerable<Aircraft>, List<AircraftDTO>>(aircrafts);
         }
 
-        public AircraftDTO UpdateAircraft(int id, AircraftDTO aircraft)
+        public async Task<AircraftDTO> UpdateAircraft(int id, AircraftDTO aircraft)
         {
             try
             {
                 Validation(aircraft);
                 Aircraft modelAircraft = mapper.Map<AircraftDTO, Aircraft>(aircraft);
-                Aircraft result = unitOfWork.Aircrafts.Update(id, modelAircraft);
-                unitOfWork.SaveChages();
+                Aircraft result = await unitOfWork.Aircrafts.Update(id, modelAircraft);
+                await unitOfWork.SaveChangesAsync();
                 return mapper.Map<Aircraft, AircraftDTO>(result);
             }
             catch (System.Exception ex)

@@ -7,6 +7,7 @@ using bsa2018_ProjectStructure.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace bsa2018_ProjectStructure.BLL.Services
             validator = new TicketValidator();
         }
 
-        public TicketDTO AddTicket(TicketDTO ticket)
+        public async Task<TicketDTO> AddTicket(TicketDTO ticket)
         {
             Validation(ticket);
             Ticket modelTicket = mapper.Map<TicketDTO, Ticket>(ticket);
-            Ticket result = unitOfWork.Tickets.Create(modelTicket);
-            unitOfWork.SaveChages();
+            Ticket result = await unitOfWork.Tickets.Create(modelTicket);
+            await unitOfWork.SaveChangesAsync();
             return mapper.Map<Ticket, TicketDTO>(result);
         }
 
-        public void DeleteTicket(int id)
+        public async Task DeleteTicket(int id)
         {
             try
             {
-                unitOfWork.Tickets.Delete(id);
-                unitOfWork.SaveChages();
+                await unitOfWork.Tickets.Delete(id);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -45,26 +46,26 @@ namespace bsa2018_ProjectStructure.BLL.Services
             }
         }
 
-        public List<TicketDTO> GetAllTickets()
+        public async Task<List<TicketDTO>> GetAllTickets()
         {
-            IEnumerable<Ticket> tickets = unitOfWork.Tickets.GetAll();
+            IEnumerable<Ticket> tickets = await unitOfWork.Tickets.GetAll();
             return mapper.Map<IEnumerable<Ticket>, List<TicketDTO>>(tickets);
         }
 
-        public TicketDTO GetTicket(int id)
+        public async Task<TicketDTO> GetTicket(int id)
         {
-            Ticket ticket = unitOfWork.Tickets.GetById(id);
+            Ticket ticket = await unitOfWork.Tickets.GetById(id);
             return mapper.Map<Ticket, TicketDTO>(ticket);
         }
 
-        public TicketDTO UpdateTicket(int id, TicketDTO ticket)
+        public async Task<TicketDTO> UpdateTicket(int id, TicketDTO ticket)
         {
             try
             {
                 Validation(ticket);
                 Ticket modelTicket = mapper.Map<TicketDTO, Ticket>(ticket);
-                Ticket result = unitOfWork.Tickets.Update(id, modelTicket);
-                unitOfWork.SaveChages();
+                Ticket result = await unitOfWork.Tickets.Update(id, modelTicket);
+                await unitOfWork.SaveChangesAsync();
                 return mapper.Map<Ticket, TicketDTO>(result);
             }
             catch (Exception ex)

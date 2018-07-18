@@ -7,6 +7,7 @@ using bsa2018_ProjectStructure.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace bsa2018_ProjectStructure.BLL.Services
             validator = new StewardessValidator();
         }
 
-        public StewardessDTO AddStewardess(StewardessDTO stewardess)
+        public async Task<StewardessDTO> AddStewardess(StewardessDTO stewardess)
         {
             Validation(stewardess);
             Stewardess modelStewardess = mapper.Map<StewardessDTO, Stewardess>(stewardess);
-            Stewardess result= unitOfWork.Stewardess.Create(modelStewardess);
-            unitOfWork.SaveChages();
+            Stewardess result= await unitOfWork.Stewardess.Create(modelStewardess);
+            await unitOfWork.SaveChangesAsync();
             return mapper.Map<Stewardess, StewardessDTO>(result);
         }
 
-        public void DeleteStewardess(int id)
+        public async Task DeleteStewardess(int id)
         {
             try
             {
-                unitOfWork.Stewardess.Delete(id);
-                unitOfWork.SaveChages();
+                await unitOfWork.Stewardess.Delete(id);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -45,26 +46,26 @@ namespace bsa2018_ProjectStructure.BLL.Services
             }
         }
 
-        public List<StewardessDTO> GetAllStewardess()
+        public async Task<List<StewardessDTO>> GetAllStewardess()
         {
-            IEnumerable<Stewardess> stewardesses = unitOfWork.Stewardess.GetAll();
+            IEnumerable<Stewardess> stewardesses = await unitOfWork.Stewardess.GetAll();
             return mapper.Map<IEnumerable<Stewardess>, List<StewardessDTO>>(stewardesses);
         }
 
-        public StewardessDTO GetStewardess(int id)
+        public async Task<StewardessDTO> GetStewardess(int id)
         {
-            Stewardess stewardess = unitOfWork.Stewardess.GetById(id);
+            Stewardess stewardess = await unitOfWork.Stewardess.GetById(id);
             return mapper.Map<Stewardess, StewardessDTO>(stewardess);
         }
 
-        public StewardessDTO UpdateStewardess(int id, StewardessDTO stewardess)
+        public async Task<StewardessDTO> UpdateStewardess(int id, StewardessDTO stewardess)
         {
             try
             {
                 Validation(stewardess);
                 Stewardess modelStewardess = mapper.Map<StewardessDTO, Stewardess>(stewardess);
-                Stewardess result = unitOfWork.Stewardess.Update(id, modelStewardess);
-                unitOfWork.SaveChages();
+                Stewardess result = await unitOfWork.Stewardess.Update(id, modelStewardess);
+                await unitOfWork.SaveChangesAsync();
                 return mapper.Map<Stewardess, StewardessDTO>(result);
             }
             catch (Exception ex)

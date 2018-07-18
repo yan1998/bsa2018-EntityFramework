@@ -7,6 +7,7 @@ using bsa2018_ProjectStructure.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace bsa2018_ProjectStructure.BLL.Services
             validator = new DepartureValidator();
         }
 
-        public DepartureDTO AddDeparture(DepartureDTO departure)
+        public async Task<DepartureDTO> AddDeparture(DepartureDTO departure)
         {
             Validation(departure);
             Departure modelDeparture = mapper.Map<DepartureDTO, Departure>(departure);
-            Departure result = unitOfWork.Departures.Create(modelDeparture);
-            unitOfWork.SaveChages();
+            Departure result = await unitOfWork.Departures.Create(modelDeparture);
+            await unitOfWork.SaveChangesAsync();
             return mapper.Map<Departure, DepartureDTO>(result);
         }
 
-        public void DeleteDeparture(int id)
+        public async Task DeleteDeparture(int id)
         {
             try
             {
-                unitOfWork.Departures.Delete(id);
-                unitOfWork.SaveChages();
+                await unitOfWork.Departures.Delete(id);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -45,26 +46,26 @@ namespace bsa2018_ProjectStructure.BLL.Services
             }
         }
 
-        public List<DepartureDTO> GetAllDepartures()
+        public async Task<List<DepartureDTO>> GetAllDepartures()
         {
-            IEnumerable<Departure> departures = unitOfWork.Departures.GetAll();
+            IEnumerable<Departure> departures = await unitOfWork.Departures.GetAll();
             return mapper.Map<IEnumerable<Departure>, List<DepartureDTO>>(departures);
         }
 
-        public DepartureDTO GetDeparture(int id)
+        public async Task<DepartureDTO> GetDeparture(int id)
         {
-            Departure departure = unitOfWork.Departures.GetById(id);
+            Departure departure = await unitOfWork.Departures.GetById(id);
             return mapper.Map<Departure, DepartureDTO>(departure);
         }
 
-        public DepartureDTO UpdateDeparture(int id, DepartureDTO departure)
+        public async Task<DepartureDTO> UpdateDeparture(int id, DepartureDTO departure)
         {
             try
             {
                 Validation(departure);
                 Departure modelDeparture = mapper.Map<DepartureDTO, Departure>(departure);
-                Departure result = unitOfWork.Departures.Update(id, modelDeparture);
-                unitOfWork.SaveChages();
+                Departure result = await unitOfWork.Departures.Update(id, modelDeparture);
+                await unitOfWork.SaveChangesAsync();
                 return mapper.Map<Departure, DepartureDTO>(result);
             }
             catch (Exception ex)

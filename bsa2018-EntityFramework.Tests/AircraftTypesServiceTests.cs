@@ -67,7 +67,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => aircraftTypesService.AddAircraftType(aircraftType));
+            Assert.ThrowsAsync<Exception>(async() => await aircraftTypesService.AddAircraftType(aircraftType));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => aircraftTypesService.AddAircraftType(aircraftType));
+            Assert.ThrowsAsync<Exception>(async () => await aircraftTypesService.AddAircraftType(aircraftType));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(() => aircraftTypesService.AddAircraftType(aircraftType));
+            Assert.ThrowsAsync<Exception>(async() => await aircraftTypesService.AddAircraftType(aircraftType));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace bsa2018_ProjectStructure.BLL.Tests
             };
 
             //assert
-            Assert.Throws<Exception>(()=> aircraftTypesService.UpdateAircraftType(1, aircraftType));
+            Assert.ThrowsAsync<Exception>(async ()=> await aircraftTypesService.UpdateAircraftType(1, aircraftType));
         }
     }
 }

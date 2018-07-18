@@ -15,7 +15,7 @@ namespace bsa2018_ProjectStructure.DataAccess.Interfaces
             this.context = context;
         }
 
-        public async Task<IEnumerable<Flight>> IRepository<Flight>.GetAll()
+        async Task<IEnumerable<Flight>> IRepository<Flight>.GetAll()
         {
             return await context.Flights.ToListAsync();
         }

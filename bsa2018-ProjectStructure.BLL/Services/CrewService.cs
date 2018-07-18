@@ -7,6 +7,7 @@ using bsa2018_ProjectStructure.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace bsa2018_ProjectStructure.BLL.Services
             validator = new CrewValidator();
         }
 
-        public CrewDTO AddCrew(CrewDTO crew)
+        public async Task<CrewDTO> AddCrew(CrewDTO crew)
         {
             Validation(crew);
             Crew modelCrew = mapper.Map<CrewDTO, Crew>(crew);
-            Crew result = unitOfWork.Crews.Create(modelCrew);
-            unitOfWork.SaveChages();
+            Crew result = await unitOfWork.Crews.Create(modelCrew);
+            await unitOfWork.SaveChangesAsync();
             return mapper.Map<Crew, CrewDTO>(result);
         }
 
-        public void DeleteCrew(int id)
+        public async Task DeleteCrew(int id)
         {
             try
             {
-                unitOfWork.Crews.Delete(id);
-                unitOfWork.SaveChages();
+                await unitOfWork.Crews.Delete(id);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (System.Exception ex)
             {
@@ -45,26 +46,26 @@ namespace bsa2018_ProjectStructure.BLL.Services
             }
         }
 
-        public List<CrewDTO> GetAllCrews()
+        public async Task<List<CrewDTO>> GetAllCrews()
         {
-            IEnumerable<Crew> crews = unitOfWork.Crews.GetAll();
+            IEnumerable<Crew> crews = await unitOfWork.Crews.GetAll();
             return mapper.Map<IEnumerable<Crew>, List<CrewDTO>>(crews);
         }
 
-        public CrewDTO GetCrew(int id)
+        public async Task<CrewDTO> GetCrew(int id)
         {
-            Crew crew = unitOfWork.Crews.GetById(id);
+            Crew crew = await unitOfWork.Crews.GetById(id);
             return mapper.Map<Crew, CrewDTO>(crew);
         }
 
-        public CrewDTO UpdateCrew(int id, CrewDTO crew)
+        public async Task<CrewDTO> UpdateCrew(int id, CrewDTO crew)
         {
             try
             {
                 Validation(crew);
                 Crew modelCrew = mapper.Map<CrewDTO, Crew>(crew);
-                Crew result = unitOfWork.Crews.Update(id, modelCrew);
-                unitOfWork.SaveChages();
+                Crew result = await unitOfWork.Crews.Update(id, modelCrew);
+                await unitOfWork.SaveChangesAsync();
                 return mapper.Map<Crew, CrewDTO>(result);
             }
             catch (System.Exception ex)

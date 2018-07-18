@@ -1,14 +1,15 @@
 ﻿using bsa2018_ProjectStructure.Shared.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Interfaces
 {
     public interface IDepartureService
     {
-        DepartureDTO AddDeparture(DepartureDTO departure);
-        List<DepartureDTO> GetAllDepartures();
-        DepartureDTO GetDeparture(int id);
-        DepartureDTO UpdateDeparture(int id, DepartureDTO departure);
-        void DeleteDeparture(int id);
+        Task<DepartureDTO> AddDeparture(DepartureDTO departure);
+        Task<List<DepartureDTO>> GetAllDepartures();
+        Task<DepartureDTO> GetDeparture(int id);
+        Task<DepartureDTO> UpdateDeparture(int id, DepartureDTO departure);
+        Task DeleteDeparture(int id);
     }
 }

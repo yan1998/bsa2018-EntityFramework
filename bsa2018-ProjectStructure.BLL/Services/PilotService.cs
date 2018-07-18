@@ -7,6 +7,7 @@ using bsa2018_ProjectStructure.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace bsa2018_ProjectStructure.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace bsa2018_ProjectStructure.BLL.Services
             validator = new PilotValidator();
         }
 
-        public PilotDTO AddPilot(PilotDTO pilot)
+        public async Task<PilotDTO> AddPilot(PilotDTO pilot)
         {
             Validation(pilot);
             Pilot modelPilot = mapper.Map<PilotDTO, Pilot>(pilot);
-            Pilot result = unitOfWork.Pilots.Create(modelPilot);
-            unitOfWork.SaveChages();
+            Pilot result = await unitOfWork.Pilots.Create(modelPilot);
+            await unitOfWork.SaveChangesAsync();
             return mapper.Map<Pilot, PilotDTO>(result);
         }
 
-        public void DeletePilot(int id)
+        public async Task DeletePilot(int id)
         {
             try
             {
-                unitOfWork.Pilots.Delete(id);
-                unitOfWork.SaveChages();
+                await unitOfWork.Pilots.Delete(id);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -45,26 +46,26 @@ namespace bsa2018_ProjectStructure.BLL.Services
             }
         }
 
-        public List<PilotDTO> GetAllPilots()
+        public async Task<List<PilotDTO>> GetAllPilots()
         {
-            IEnumerable<Pilot> pilots = unitOfWork.Pilots.GetAll();
+            IEnumerable<Pilot> pilots = await unitOfWork.Pilots.GetAll();
             return mapper.Map<IEnumerable<Pilot>, List<PilotDTO>>(pilots);
         }
 
-        public PilotDTO GetPilot(int id)
+        public async Task<PilotDTO> GetPilot(int id)
         {
-            Pilot pilot = unitOfWork.Pilots.GetById(id);
+            Pilot pilot = await unitOfWork.Pilots.GetById(id);
             return mapper.Map<Pilot, PilotDTO>(pilot);
         }
 
-        public PilotDTO UpdatePilot(int id, PilotDTO pilot)
+        public async Task<PilotDTO> UpdatePilot(int id, PilotDTO pilot)
         {
             try
             {
                 Validation(pilot);
                 Pilot modelPilot = mapper.Map<PilotDTO, Pilot>(pilot);
-                Pilot result = unitOfWork.Pilots.Update(id, modelPilot);
-                unitOfWork.SaveChages();
+                Pilot result = await unitOfWork.Pilots.Update(id, modelPilot);
+                await unitOfWork.SaveChangesAsync();
                 return mapper.Map<Pilot, PilotDTO>(result);
             }
             catch (Exception ex)
